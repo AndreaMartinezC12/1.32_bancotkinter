@@ -28,17 +28,24 @@ def depositar():
     cantidad = entrada_cantidad.get()
     saldoactual=int(saldo)
     saldoactual += int(cantidad)
-    print(saldoactual)
     sld.config(text=saldoactual)
     saldo=saldoactual
 
 
 def retirar():
-    cantidad=entrada_cantidad.get()
+    global saldo
+    cantidad = entrada_cantidad.get()
+    saldoactual=int(saldo)
+    if saldoactual < int(cantidad):
+        messagebox.showinfo("Saldo insuficiente", "Tu saldo es insuficiente para el retiro")
+    else:
+        saldoactual -= int(cantidad)
+        sld.config(text=saldoactual)
+        saldo=saldoactual
 
 root=tk.Tk()
 root.title("Banco")
-root.geometry("300x200")
+root.geometry("300x700")
 tk.Label(root, text="Ejercicio Banco").pack()
 
 tk.Label(root, text="Datos para crear una cuenta: ").pack()
@@ -69,7 +76,7 @@ entrada_saldo.pack()
 
 tk.Button(root, text="Crear cuenta", command=creacuenta).pack()
 
-tk.Label(root, text="Cantidad: ").pack()
+tk.Label(root, text="Cantidad a depositar o retirar: ").pack()
 entrada_cantidad = tk.Entry(root)
 entrada_cantidad.pack()
 
